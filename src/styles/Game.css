@@ -1,0 +1,9 @@
+span.frame {
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 4px;
+}
+
+span.roll {
+    margin: 2px;
+}
