@@ -1,4 +1,4 @@
-const Controllers = require('../database/controllers');
+const Controllers = require('./database/controllers');
 
 module.exports = (app) => {
     // listening for incoming requests to endpoints at

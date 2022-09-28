@@ -1,10 +1,14 @@
-import Scorecard from './components/Scorecard';
+import React from 'react';
+import BowlingProvider from "./client/contexts/Bowling.Context";
+import Scorecard from './client/components/Scorecard';
 import './App.css';
 
 const App = () => {
   return (
     <div className="App">
-      <Scorecard />
+        <BowlingProvider>
+            <Scorecard />
+        </BowlingProvider>
     </div>
   );
 }
