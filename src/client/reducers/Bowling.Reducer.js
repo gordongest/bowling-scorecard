@@ -6,8 +6,7 @@ const bowlingReducer = (state, action) => {
             return [...state, action.player];
         case "addRoll":
             return state.map(player => {
-                console.log(action)
-                    if (player.name === action.playerName) {
+                    if (player.id === action.playerId) {
                         player.frames[action.currentFrame][action.currentRoll] = action.rollValue;
 
                         if (isStrike(action.rollValue)) {
@@ -22,7 +21,7 @@ const bowlingReducer = (state, action) => {
             );
         case "updateTotal":
             return state.map(player =>
-                player.name === action.playerName ?
+                player.id === action.playerId ?
                     {... player, total: action.total } : player
             );
         default:

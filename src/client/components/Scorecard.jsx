@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { DispatchContext, PlayersContext } from "../contexts/Bowling.Context";
-import AddPlayerForm from "./AddPlayerForm";
-import ScoreEntry from "./ScoreEntry";
+import { v4 as uuid } from 'uuid';
+import { DispatchContext, PlayersContext } from '../contexts/Bowling.Context';
+import AddPlayerForm from './AddPlayerForm';
+import ScoreEntry from './ScoreEntry';
 import Game from './Game';
 
 const Scorecard = () => {
@@ -15,6 +16,7 @@ const Scorecard = () => {
 
     const addPlayer = ({ playerName }) => {
         const newPlayer = {
+            id: uuid(),
             name: playerName,
             frames: new Array(10).fill(new Array(2).fill('-')),
             total: 0
@@ -26,7 +28,7 @@ const Scorecard = () => {
     const addRoll = rollValue => {
         dispatch({
             type: "addRoll",
-            playerName: activePlayer.name,
+            playerId: activePlayer.id,
             currentFrame: currentFrame,
             currentRoll: currentRoll,
             rollValue: rollValue
@@ -92,7 +94,7 @@ const Scorecard = () => {
 
             {/* show each player's running score */}
             {players.length > 0 &&
-                players.map((player, i) =>
+                players.map((player) =>
                     <Game {...player} />
                 )
             }

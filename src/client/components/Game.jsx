@@ -3,7 +3,7 @@ import { DispatchContext } from "../contexts/Bowling.Context";
 import { isStrike, isSpare, parseScore } from "../helpers";
 import '../styles/Game.css'
 
-const Game = ({ name, total, frames }) => {
+const Game = ({ id, name, total, frames }) => {
     useEffect(() => {
         updateTotal();
     }, [JSON.stringify(frames)])
@@ -15,13 +15,13 @@ const Game = ({ name, total, frames }) => {
         const newTotal = flattenedFrames.reduce((acc, val, i) => {
             // strike awards 10 plus sum of next two rolls
             if (isStrike(val) && i <= frames.length - 3) {
-                return acc + (parseScore(val) + (parseScore(frames[i + 2] + parseScore(frames[i + 3]))));
+                return acc + (parseScore(val) + (parseScore(flattenedFrames[i + 2] + parseScore(flattenedFrames[i + 3]))));
                 // TODO: deal with strike in last frame
             }
 
             // spare awards 10 plus next roll
             if (isSpare(val)) {
-                return acc + (parseScore(val) + parseScore(frames[i + 1]));
+                return acc + (parseScore(val) + parseScore(flattenedFrames[i + 1]));
             }
 
             return acc + parseScore(val);
@@ -29,7 +29,7 @@ const Game = ({ name, total, frames }) => {
 
         console.log('newTotal:', newTotal)
 
-        dispatch({ type: "updateTotal", playerName: name, total: newTotal });
+        dispatch({ type: "updateTotal", playerId: id, total: newTotal });
     }
 
     return (
