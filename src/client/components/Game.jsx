@@ -2,9 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/Game.css'
 import { DispatchContext } from "../contexts/Bowling.Context";
 
-const Game = ({ player }) => {
-    const { name, total, frames } = player;
-
+const Game = ({ name, total, frames }) => {
     useEffect(() => {
         updateTotal();
     }, [JSON.stringify(frames)])

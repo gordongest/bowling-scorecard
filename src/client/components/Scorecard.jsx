@@ -100,7 +100,7 @@ const Scorecard = () => {
             {/* show each player's running score */}
             {players.length > 0 &&
                 players.map((player, i) =>
-                    <Game player={player} frame={currentFrame}/>
+                    <Game {...player} />
                 )
             }
 
