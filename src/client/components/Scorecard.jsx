@@ -3,7 +3,6 @@ import { DispatchContext, PlayersContext } from "../contexts/Bowling.Context";
 import AddPlayerForm from "./AddPlayerForm";
 import ScoreEntry from "./ScoreEntry";
 import Game from './Game';
-import { Controller, useForm } from 'react-hook-form';
 
 const Scorecard = () => {
     const { players } = useContext(PlayersContext);
@@ -75,16 +74,6 @@ const Scorecard = () => {
         setLeader(leader);
     }
 
-    // TODO: implement scoring algorithm
-    // scoring helper methods
-    const isStrike = (frame) => {
-        return frame[0] === 'X';
-    }
-
-    const isSpare = (frame) => {
-        return (parseInt(frame[0]) + parseInt(frame[1])) === 10;
-    }
-
     // TODO: validate roll input and mutate rollsLeft based on whether it was a strike or not
 
     return (
@@ -111,7 +100,7 @@ const Scorecard = () => {
             {/* show each player's running score */}
             {players.length > 0 &&
                 players.map((player, i) =>
-                    <Game {...player} frame={currentFrame}/>
+                    <Game player={player} frame={currentFrame}/>
                 )
             }
 
