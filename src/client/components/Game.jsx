@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { DispatchContext } from "../contexts/Bowling.Context";
-import { isStrike, isSpare, parseScore } from "../helpers";
+import { containsStrike, containsSpare, parseScore } from "../helpers";
 import '../styles/Game.css'
 
 const Game = ({ id, name, total, frames }) => {
@@ -11,21 +11,21 @@ const Game = ({ id, name, total, frames }) => {
     const { dispatch } = useContext(DispatchContext);
 
     const updateTotal = () => {
-        const flattenedFrames = frames.flat();
-        const newTotal = flattenedFrames.reduce((acc, val, i) => {
-            // strike awards 10 plus sum of next two rolls
-            if (isStrike(val) && i <= frames.length - 3) {
-                return acc + (parseScore(val) + (parseScore(flattenedFrames[i + 2] + parseScore(flattenedFrames[i + 3]))));
-                // TODO: deal with strike in last frame
+        const newTotal = frames.reduce((totalAcc, frame, i) => {
+            const frameTotal = frame.reduce((frameAcc, roll) => {
+                return frameAcc + parseScore(roll);
+            }, 0)
+
+            if (containsStrike(frame) && i <= frames.length - 1) {
+                return totalAcc + frameTotal + parseScore(frames[i + 1][0]) + parseScore(frames[i + 1][1]);
             }
 
-            // spare awards 10 plus next roll
-            // TODO: implement logic for spares
+            if (containsSpare(frame) && i <= frames.length - 1) {
+                return totalAcc + frameTotal + parseScore(frames[i + 1][0]);
+            }
 
-            return acc + parseScore(val);
-        }, 0)
-
-        console.log('newTotal:', newTotal)
+            return totalAcc + frameTotal;
+        }, 0);
 
         dispatch({ type: "updateTotal", playerId: id, total: newTotal });
     }

@@ -1,15 +1,19 @@
 // scoring helper methods
 
 const isStrike = val => {
-    return val === '10';
+    return val === 'X';
 }
 
 const isEmpty = val => {
     return val === '-';
 }
 
-const isSpare = (frame) => {
-    return parseInt(frame[0]) + parseInt(frame[1]) === 10;
+const containsStrike = frame => {
+    return frame.includes("10");
+}
+
+const containsSpare = frame => {
+    return (!frame.includes("-") && (parseInt(frame[0]) + parseInt(frame[1]) === 10));
 }
 
 const parseScore = val => {
@@ -20,4 +24,4 @@ const parseScore = val => {
     } else return parseInt(val)
 }
 
-export { isStrike, isSpare, isEmpty, parseScore};
+export { isStrike, isEmpty, containsStrike, containsSpare, parseScore};
