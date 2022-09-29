@@ -3,9 +3,9 @@ import '../styles/Game.css'
 
 const Game = ({ name, frames, total, frame }) => {
     // TODO: keep track of which roll it is! (2 rolls/frame except in last, where 2 strikes or spare gets extra roll)
-    const [rollCounter, setRoll] = useState(1);
+    const [rollCounter, setRoll] = useState(0);
     const reset = () => {
-        setRoll(1);
+        setRoll(0);
     }
 
     // TODO: write method (call .reduce() ?) to calculate total score for player
@@ -19,20 +19,26 @@ const Game = ({ name, frames, total, frame }) => {
 
     return (
         <div>
-            <p>
-                {name}
-            </p>
             {/* TODO: implement input paradigm for scores -- select for current frame, span for past/future frames? */}
             <div>
-                {frames.map((f, i) => {
-                    return <span className="frame">
-                        {f.map(roll => {
-                            return <span className="roll">{roll}</span>
+                <table>
+                    <tr>
+                        <td className="table-player-name">{name}</td>
+                        {frames.map((f, i) => {
+                            return <td className="frame">
+                                <tr>
+                                    {f.map(roll => {
+                                        return <td className="roll">{roll}</td>
+                                    })}
+                                </tr>
+                            </td>
                         })}
-                    </span>
-                })}
+                        <td>
+                            {total}
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <p>total: {total}</p>
         </div>
     )
 

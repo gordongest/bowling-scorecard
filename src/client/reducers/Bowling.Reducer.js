@@ -2,6 +2,12 @@ const bowlingReducer = (state, action) => {
     switch (action.type) {
         case "addPlayer":
             return [...state, action.player];
+        case "addRoll":
+            return state.filter(player =>
+                player.name === action.playerName ?
+                    // update the current roll of the current frame to the given value
+                    player.frames[action.frame][action.roll] = action.value : player
+            );
         case "remove":
             return state.filter(toDo => toDo.id !== action.id);
         case "update":

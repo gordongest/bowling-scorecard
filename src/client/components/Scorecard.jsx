@@ -2,13 +2,19 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DispatchContext, PlayersContext } from "../contexts/Bowling.Context";
 import AddPlayerForm from "./AddPlayerForm";
 import Game from './Game';
+import { useForm } from 'react-hook-form';
 
 const Scorecard = () => {
     const { players } = useContext(PlayersContext);
     const { dispatch } = useContext(DispatchContext);
-    let activePlayer;
-    let gameStarted = false;
+    const [gameStarted, setGameStarted] = useState(false);
+    const [activePlayer, setActivePlayer] = useState();
     let currentFrame = 0;
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
 
     useEffect(() => {
         console.log("frame:", currentFrame)
@@ -25,24 +31,27 @@ const Scorecard = () => {
         dispatch({ type: 'addPlayer', player: newPlayer })
     }
 
-    // TODO: keep track of which player is active and
-    // TODO: keep track of which frame is active
+    const updateScore = ({ roll, rollValue }) => {
+        dispatch({
+            type: "addRoll",
+            playerName: activePlayer.name,
+            frame: currentFrame,
+            roll: roll,
+            value: rollValue
+        });
+    }
+
+
+    // TODO: keep track of which player is active
+    // TODO: keep track of current frame
     const startGame = () => {
         console.log('game time started')
-        activePlayer= players[0];
-        gameStarted = true;
-        currentFrame++
+        setActivePlayer(players[0]);
+        setGameStarted(true);
+        currentFrame++;
         // while not in 10th frame,
-        // while (currentFrame < 9) {
-        //     // iterate through players,
-        //     for (let i = 0; i < players.length; i++) {
-        //         // set 'active' flag to true for current player
-        //        activePlayer = players[i];
-               console.log('active:', activePlayer)
-        //     }
-        //     // increment frame
-        //     currentFrame++;
-        // }
+            // rotate through through players,
+            // increment frame
     }
 
     // TODO: determine when game has ended and declare winner
@@ -58,10 +67,38 @@ const Scorecard = () => {
         return leader;
     }
 
+    const isStrike = (frame) => {
+        return frame[0] === 'X';
+    }
+
+    const isSpare = (frame) => {
+        return (parseInt(frame[0]) + parseInt(frame[1])) === 10;
+    }
+
+    // TODO: validate roll input and mutate rollsLeft based on whether it was a strike or not
+
+    // TODO: implement scoring algorithm
+
     return (
         <div>
-            {players.length < 4 &&
+            {/* TODO: render name of active player and input field to accept value of roll */}
+            {(players.length < 4 && !gameStarted) &&
                 <AddPlayerForm addPlayer={addPlayer} />
+            }
+
+            {/*    between frame 1-9, 2 rolls per player*/}
+            {gameStarted &&
+            <div>
+                <form onSubmit={handleSubmit(data => {
+                    console.log(data);
+                })}>
+                    <input
+                        type="text" {...register("rollValue", { required: 'Value is required' })}
+                        placeholder="Enter roll..."
+                    />
+                    <input type="submit"/>
+                </form>
+            </div>
             }
 
             {players.length > 1 &&
@@ -70,33 +107,8 @@ const Scorecard = () => {
                 )
             }
 
-            {(currentFrame < 1 && players.length > 0) &&
-                <button onClick={startGame}>start game</button>
-            }
-
-            {/*    between frame 1-9, 2 rolls per player*/}
-            {gameStarted ?
-                <p>game time started</p>
-                :
-                null
-                // <div>
-                //     {activePlayer?.frames.map((frame, i) => {
-                //         console.log(i)
-                //         return <span className="frame">
-                //             {i === currentFrame ?
-                //                 <div>
-                //                     <select>
-                //                         <option value="1">1</option>
-                //                     </select>
-                //                 </div>
-                //                 :
-                //                 frame.map(roll => {
-                //                     return <span className="roll">{roll}</span>
-                //                 })
-                //             }
-                //         </span>
-                //     })}
-                // </div>
+            {(!gameStarted && players.length > 0) &&
+                <button onClick={startGame}>START</button>
             }
         </div>
     )
