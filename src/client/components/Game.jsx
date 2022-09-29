@@ -20,9 +20,7 @@ const Game = ({ id, name, total, frames }) => {
             }
 
             // spare awards 10 plus next roll
-            if (isSpare(val)) {
-                return acc + (parseScore(val) + parseScore(flattenedFrames[i + 1]));
-            }
+            // TODO: implement logic for spares
 
             return acc + parseScore(val);
         }, 0)
