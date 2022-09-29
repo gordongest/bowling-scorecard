@@ -1,7 +1,7 @@
 // score values
 
 const scoreVals = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X'
 ]
 
 // scoring helper methods
@@ -15,7 +15,7 @@ const isEmpty = val => {
 }
 
 const containsStrike = frame => {
-    return frame.includes("10");
+    return frame.includes("X");
 }
 
 const containsSpare = frame => {
