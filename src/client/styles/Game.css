@@ -19,21 +19,24 @@ table {
     margin-top:20px;
 }
 
-td {
-    text-align: center;
-}
-
 .table-player-name {
     padding-right: 15px;
 }
 
 .table-frame-no {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.table-total {
+    padding-left: 15px;
 }
 
 button {
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     width: 8vw;
     height: 4vh;
     margin: 10px;

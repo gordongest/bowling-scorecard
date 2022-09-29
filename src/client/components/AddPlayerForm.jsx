@@ -13,13 +13,16 @@ const AddPlayerForm = ({ addPlayer }) => {
 
     return (
         <div>
+            <div>
+                <p>Enter a name to add a player:</p>
+            </div>
             <form onSubmit={handleSubmit(data => {
                 addPlayer(data);
                 reset();
             })}>
                 <input
                     type="text" {...register("playerName", { required: 'Name is required' })}
-                    placeholder="Enter name..."
+                    placeholder="Name..."
                 />
                 {/*<p>{errors.playerName?.message}</p>*/}
                 <input type="submit"/>

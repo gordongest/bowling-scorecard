@@ -3,7 +3,7 @@ const bowlingReducer = (state, action) => {
         case "addPlayer":
             return [...state, action.player];
         case "addRoll":
-            return state.map(player => {
+            return state.filter(player => {
                     if (player.name === action.playerName) {
                         player.frames[action.currentFrame][action.currentRoll] = action.rollValue;
                         return player;
