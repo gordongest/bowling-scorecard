@@ -30,4 +30,22 @@ const parseScore = val => {
     } else return parseInt(val)
 }
 
-export { scoreVals, isStrike, isEmpty, containsStrike, containsSpare, parseScore};
+// scoring method
+
+const totalScore = frames => frames.reduce((totalAcc, frame, i) => {
+    const frameTotal = frame.reduce((frameAcc, roll) => {
+        return frameAcc + parseScore(roll);
+    }, 0)
+
+    if (containsStrike(frame) && i <= frames.length - 1) {
+        return totalAcc + frameTotal + parseScore(frames[i + 1][0]) + parseScore(frames[i + 1][1]);
+    }
+
+    if (containsSpare(frame) && i <= frames.length - 1) {
+        return totalAcc + frameTotal + parseScore(frames[i + 1][0]);
+    }
+
+    return totalAcc + frameTotal;
+}, 0);
+
+export { scoreVals, isStrike, isEmpty, containsStrike, containsSpare, parseScore, totalScore };

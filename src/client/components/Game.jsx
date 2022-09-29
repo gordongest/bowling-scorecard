@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { DispatchContext } from "../contexts/Bowling.Context";
-import { containsStrike, containsSpare, parseScore } from "../helpers";
+import { totalScore } from "../helpers";
 import '../styles/Game.css'
 
 const Game = ({ id, name, total, frames }) => {
@@ -11,23 +11,7 @@ const Game = ({ id, name, total, frames }) => {
     const { dispatch } = useContext(DispatchContext);
 
     const updateTotal = () => {
-        const newTotal = frames.reduce((totalAcc, frame, i) => {
-            const frameTotal = frame.reduce((frameAcc, roll) => {
-                return frameAcc + parseScore(roll);
-            }, 0)
-
-            if (containsStrike(frame) && i <= frames.length - 1) {
-                return totalAcc + frameTotal + parseScore(frames[i + 1][0]) + parseScore(frames[i + 1][1]);
-            }
-
-            if (containsSpare(frame) && i <= frames.length - 1) {
-                return totalAcc + frameTotal + parseScore(frames[i + 1][0]);
-            }
-
-            return totalAcc + frameTotal;
-        }, 0);
-
-        dispatch({ type: "updateTotal", playerId: id, total: newTotal });
+        dispatch({ type: "updateTotal", playerId: id, total: totalScore(frames) });
     }
 
     return (
