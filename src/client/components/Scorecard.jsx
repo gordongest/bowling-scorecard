@@ -32,7 +32,6 @@ const Scorecard = () => {
             rollValue: rollValue
         });
 
-        // TODO: keep track of current frame/roll
         if (currentRoll === 0 && rollValue !== 'X') {
             setRoll(1);
         } else {
@@ -69,8 +68,6 @@ const Scorecard = () => {
 
         setLeader(leader);
     }
-
-    // TODO: validate roll input and mutate rollsLeft based on whether it was a strike or not
 
     return (
         <div>

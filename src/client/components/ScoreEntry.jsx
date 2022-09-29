@@ -20,10 +20,12 @@ const ScoreEntry = ({ player, currentRoll, addRoll }) => {
                 <p>{player.name} is up!</p>
                 <p>Enter their score for roll {currentRoll + 1}</p>
             </div>
+            {/*  TODO: validate roll input */}
             <form onSubmit={handleSubmit(({ rollValue }) => {
                 addRoll(rollValue);
                 reset();
             })}>
+                {/* TODO: render options based on prev roll */}
                 <Controller
                     render={({ field }) => (
                         <select {...field}>
