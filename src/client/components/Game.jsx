@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { DispatchContext } from "../contexts/Bowling.Context";
-import { isStrike, isSpare, isEmpty, parseScore } from "../helpers";
+import { isStrike, isSpare, parseScore } from "../helpers";
 import '../styles/Game.css'
 
 const Game = ({ name, total, frames }) => {
@@ -23,7 +23,6 @@ const Game = ({ name, total, frames }) => {
             if (isSpare(val)) {
                 return acc + (parseScore(val) + parseScore(frames[i + 1]));
             }
-
 
             return acc + parseScore(val);
         }, 0)

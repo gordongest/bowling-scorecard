@@ -1,4 +1,4 @@
-import { isStrike, isSpare, isEmpty } from "../helpers";
+import { isStrike } from "../helpers";
 
 const bowlingReducer = (state, action) => {
     switch (action.type) {
