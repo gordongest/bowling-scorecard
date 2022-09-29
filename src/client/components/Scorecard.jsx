@@ -9,17 +9,18 @@ const Scorecard = () => {
     const { dispatch } = useContext(DispatchContext);
     const [gameStarted, setGameStarted] = useState(false);
     const [activePlayer, setActivePlayer] = useState();
-    let currentFrame = 0;
+    const [currentFrame, setFrame] = useState(0);
+    const [currentRoll, setRoll] = useState(1);
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm();
 
-    useEffect(() => {
-        console.log("frame:", currentFrame)
-    }, [currentFrame])
-
+    // useEffect(() => {
+    //     console.log("frame:", currentFrame)
+    // }, [currentFrame])
 
     const addPlayer = ({ playerName }) => {
         const newPlayer = {
@@ -31,13 +32,13 @@ const Scorecard = () => {
         dispatch({ type: 'addPlayer', player: newPlayer })
     }
 
-    const updateScore = ({ roll, rollValue }) => {
+    const updateScore = ({ rollValue }) => {
         dispatch({
             type: "addRoll",
             playerName: activePlayer.name,
-            frame: currentFrame,
-            roll: roll,
-            value: rollValue
+            currentFrame: currentFrame,
+            currentRoll: currentRoll,
+            rollValue: rollValue
         });
     }
 
@@ -48,7 +49,6 @@ const Scorecard = () => {
         console.log('game time started')
         setActivePlayer(players[0]);
         setGameStarted(true);
-        currentFrame++;
         // while not in 10th frame,
             // rotate through through players,
             // increment frame
@@ -90,7 +90,8 @@ const Scorecard = () => {
             {gameStarted &&
             <div>
                 <form onSubmit={handleSubmit(data => {
-                    console.log(data);
+                    updateScore(data);
+                    reset();
                 })}>
                     <input
                         type="text" {...register("rollValue", { required: 'Value is required' })}
@@ -101,7 +102,7 @@ const Scorecard = () => {
             </div>
             }
 
-            {players.length > 1 &&
+            {players.length > 0 &&
                 players.map((player, i) =>
                     <Game {...player} frame={currentFrame}/>
                 )

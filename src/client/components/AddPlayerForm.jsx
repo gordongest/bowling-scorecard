@@ -5,6 +5,7 @@ const AddPlayerForm = ({ addPlayer }) => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm();
 
@@ -14,6 +15,7 @@ const AddPlayerForm = ({ addPlayer }) => {
         <div>
             <form onSubmit={handleSubmit(data => {
                 addPlayer(data);
+                reset();
             })}>
                 <input
                     type="text" {...register("playerName", { required: 'Name is required' })}

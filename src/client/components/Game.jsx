@@ -25,15 +25,16 @@ const Game = ({ name, frames, total, frame }) => {
                     <tr>
                         <td className="table-player-name">{name}</td>
                         {frames.map((f, i) => {
-                            return <td className="frame">
+                            return <td className="table-frame">
+                                <tr className="table-frame-no"><td>{i+1}</td></tr>
                                 <tr>
                                     {f.map(roll => {
-                                        return <td className="roll">{roll}</td>
+                                        return <td className="table-roll">{roll}</td>
                                     })}
                                 </tr>
                             </td>
                         })}
-                        <td>
+                        <td className="table-total">
                             {total}
                         </td>
                     </tr>

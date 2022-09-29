@@ -19,8 +19,16 @@ table {
     margin-top:20px;
 }
 
+td {
+    text-align: center;
+}
+
 .table-player-name {
     padding-right: 15px;
+}
+
+.table-frame-no {
+    width: 100%;
 }
 
 button {
