@@ -13,10 +13,6 @@ const Scorecard = () => {
     const [currentFrame, setFrame] = useState(0);
     const [currentRoll, setRoll] = useState(0);
 
-    // useEffect(() => {
-    //     console.log("frame:", currentFrame)
-    // }, [currentFrame])
-
     const addPlayer = ({ playerName }) => {
         const newPlayer = {
             name: playerName,

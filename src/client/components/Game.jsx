@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import '../styles/Game.css'
+import React, { useEffect, useContext } from 'react';
 import { DispatchContext } from "../contexts/Bowling.Context";
+import { isStrike, isSpare, isEmpty, parseScore } from "../helpers";
+import '../styles/Game.css'
 
 const Game = ({ name, total, frames }) => {
     useEffect(() => {
@@ -9,35 +10,20 @@ const Game = ({ name, total, frames }) => {
 
     const { dispatch } = useContext(DispatchContext);
 
-    // TODO: implement scoring algorithm
-    // scoring helper methods
-    const isStrike = val => {
-        return val === 'X';
-    }
-
-    const isEmpty = val => {
-        return val === '-';
-    }
-
-    const isSpare = (frame) => {
-        return (parseInt(frame[0]) + parseInt(frame[1])) === 10;
-    }
-
-    const parseScore = val => {
-        if (isStrike(val)) {
-            return 10
-        } else if (isEmpty(val)) {
-            return 0
-        } else return parseInt(val)
-    }
-
     const updateTotal = () => {
-    // TODO: write method (call .reduce() ?) to calculate total score for player
         const flattenedFrames = frames.flat();
         const newTotal = flattenedFrames.reduce((acc, val, i) => {
-            if (isStrike(val) && i < frames.length - 2) {
-                return acc + (parseScore(val) + parseScore(frames[i + 2]));
+            // strike awards 10 plus sum of next two rolls
+            if (isStrike(val) && i <= frames.length - 3) {
+                return acc + (parseScore(val) + (parseScore(frames[i + 2] + parseScore(frames[i + 3]))));
+                // TODO: deal with strike in last frame
             }
+
+            // spare awards 10 plus next roll
+            if (isSpare(val)) {
+                return acc + (parseScore(val) + parseScore(frames[i + 1]));
+            }
+
 
             return acc + parseScore(val);
         }, 0)
