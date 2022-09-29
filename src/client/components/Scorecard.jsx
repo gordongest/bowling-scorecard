@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
 import { DispatchContext, PlayersContext } from '../contexts/Bowling.Context';
+import { isStrike } from "../helpers";
 import AddPlayerForm from './AddPlayerForm';
 import ScoreEntry from './ScoreEntry';
 import Game from './Game';
@@ -34,7 +35,7 @@ const Scorecard = () => {
             rollValue: rollValue
         });
 
-        if (currentRoll === 0 && rollValue !== 'X') {
+        if (currentRoll === 0 && !isStrike(rollValue)) {
             setRoll(1);
         } else {
             setFrame(prev => prev + 1);

@@ -24,8 +24,6 @@ const bowlingReducer = (state, action) => {
                 player.id === action.playerId ?
                     {... player, total: action.total } : player
             );
-        default:
-            return state;
     }
 }
 
