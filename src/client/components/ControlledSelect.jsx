@@ -3,14 +3,6 @@ import { Controller, useForm } from "react-hook-form";
 import React from "react";
 
 const ControlledSelect = ({ options, name, control, ...props }) => {
-    // const {
-    //     control,
-    //     onChange,
-    //     handleSubmit,
-    //     reset,
-    //     formState: { errors }
-    // } = useForm();
-
     return (
         <Controller
             render={({ field: {value, onChange} }) => (
@@ -18,7 +10,7 @@ const ControlledSelect = ({ options, name, control, ...props }) => {
                     value={value}
                     onChange={onChange}
                 >
-                    <option name={name} disabled selected>Select {name}...</option>
+                    <option name={name} disabled defaultValue>Select {name}...</option>
                     {options.map(option => (
                         <option value={option} key={option}>{option}</option>
                     ))}
