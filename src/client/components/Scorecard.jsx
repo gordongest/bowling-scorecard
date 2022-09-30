@@ -26,16 +26,16 @@ const Scorecard = () => {
         dispatch({ type: 'addPlayer', player: newPlayer })
     }
 
-    const addRoll = rollValue => {
+    const addRoll = score => {
         dispatch({
             type: "addRoll",
             playerId: activePlayer.id,
             currentFrame: currentFrame,
             currentRoll: currentRoll,
-            rollValue: rollValue
+            rollValue: score
         });
 
-        if (currentRoll === 0 && !isStrike(rollValue)) {
+        if (currentRoll === 0 && !isStrike(score)) {
             setRoll(1);
         } else {
             setFrame(prev => prev + 1);

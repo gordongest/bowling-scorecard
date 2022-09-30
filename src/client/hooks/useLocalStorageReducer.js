@@ -7,7 +7,7 @@ const useLocalStorageReducer = (reducer, defaultVal, key) => {
             val = JSON.parse(
                 window.localStorage.getItem(key) || JSON.stringify(defaultVal)
             );
-        } catch(e) {
+        } catch (e) {
             val = defaultVal;
         }
 
@@ -17,6 +17,7 @@ const useLocalStorageReducer = (reducer, defaultVal, key) => {
     const [state, dispatch] = useReducer(reducer, defaultVal, initializer)
 
     useEffect(() => {
+        // console.log(state)
         window.localStorage.setItem(key, JSON.stringify(state));
     }, [state])
 

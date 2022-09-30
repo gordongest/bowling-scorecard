@@ -1,6 +1,7 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { scoreVals } from '../helpers';
+import ControlledSelect from "./ControlledSelect";
 
 const ScoreEntry = ({ player, currentRoll, addRoll }) => {
     const {
@@ -17,25 +18,16 @@ const ScoreEntry = ({ player, currentRoll, addRoll }) => {
                 <p>Enter their score for roll {currentRoll + 1}</p>
             </div>
             {/*  TODO: validate roll input */}
-            <form onSubmit={handleSubmit(({ rollValue }) => {
-                addRoll(rollValue);
+            <form onSubmit={handleSubmit(({ score }) => {
+                addRoll(score);
                 reset();
             })}>
                 {/* TODO: render options based on prev roll */}
-                <Controller
-                    render={({ field }) => (
-                        <select {...field}>
-                            {scoreVals.map(val => (
-                                <option value={val} key={val}>{val}</option>
-                            ))}
-                        </select>
-                    )}
-                    labelId='select-score-label'
-                    id='select-score'
+                <ControlledSelect
+                    name="score"
+                    options={scoreVals}
                     control={control}
-                    label='Score'
-                    name='rollValue'>
-                </Controller>
+                />
                 <button type="submit">enter</button>
             </form>
         </div>
