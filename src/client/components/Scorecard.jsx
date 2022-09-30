@@ -16,10 +16,13 @@ const Scorecard = () => {
     const [currentRoll, setRoll] = useState(0);
 
     const addPlayer = ({ playerName }) => {
+        const frames = [];
+        for (let i = 0; i < 10; i++) frames.push(["-", "-"]);
+
         const newPlayer = {
             id: uuid(),
             name: playerName,
-            frames: new Array(10).fill(new Array(2).fill('-')),
+            frames: frames,
             total: 0
         }
 
