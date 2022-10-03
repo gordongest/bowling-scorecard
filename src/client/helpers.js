@@ -19,7 +19,7 @@ const containsStrike = frame => {
 }
 
 const containsSpare = frame => {
-    return (!frame.includes("-") && (parseInt(frame[0]) + parseInt(frame[1]) === 10));
+    return (!containsStrike(frame) && (parseInt(frame[0]) + parseInt(frame[1]) === 10));
 }
 
 const parseScore = val => {
